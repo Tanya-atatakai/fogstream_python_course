@@ -1,30 +1,31 @@
-f = input()
-skobki = []
-open_skobki = []
+string = input()
+brackets = []
+open_brackets = []
 err = False
 index = 0
-for line in f:
+for line in string:
     if line == "{" or line == "}" or line == "[" or line == "]" or line == "(" or line == ")":
-        skobki.append(line)
+        brackets.append(line)
 
-for skobka in skobki:
-    if skobka == "{" or skobka == "[" or skobka == "(":
-        open_skobki.append(skobka)
+for bracket in brackets:
+    if bracket == "{" or bracket == "[" or bracket == "(":
+        open_brackets.append(bracket)
     else:
-        if len(open_skobki) <= 0:
+        if len(open_brackets) <= 0:
             err = True
             break
-        elif open_skobki[len(open_skobki)-1] == "{" and skobka == "}" or open_skobki[len(open_skobki)-1] == "[" and skobka == "]"or open_skobki[len(open_skobki)-1] == "(" and skobka == ")":
-            open_skobki.pop(len(open_skobki)-1)
+        elif open_brackets[len(open_brackets)-1] == "{" and bracket == "}" or open_brackets[len(open_brackets)-1] == "[" and bracket == "]"or open_brackets[len(open_brackets)-1] == "(" and bracket == ")":
+            open_brackets.pop(len(open_brackets)-1)
         else:
             err = True
             break
     index += 1
 
-if index != len(skobki) and err == True:
-    print(index)
-elif index == len(skobki) and len(open_skobki) == 0:
+if index != len(brackets) and err == True:
+    print(index+1)
+elif index == len(brackets) and len(open_brackets) == 0:
     print("yes")
 else:
     print("-1")
+
 
