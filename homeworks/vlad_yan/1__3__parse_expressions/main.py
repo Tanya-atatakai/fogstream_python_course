@@ -1,18 +1,21 @@
 import re
 from optparse import OptionParser
 
+# define and compile my regular expression
 floatnumber = '\d+(?:\.\d+)?'
 myregex = '(?P<operand1>{number})\s*(?P<operation>[\+\-\*/])\s*(?P<operand2>{number})'.format(number=floatnumber)
 myre = re.compile(myregex)
 
 
 def find_expressions(myre_, string):
+    """Get all the arithmetic expressions in the string."""
     expressions = myre_.findall(string)
 
     return expressions
 
 
 def evaluate_expression(expression):
+    """Evaluate arithmetic expression and return the result."""
     operand1, operation, operand2 = expression
     operand1 = float(operand1)
     operand2 = float(operand2)
@@ -34,6 +37,7 @@ def evaluate_expression(expression):
 
 
 def main(myre_, string):
+    """Main function."""
     expressions = find_expressions(myre_, string)
 
     for expr in expressions:

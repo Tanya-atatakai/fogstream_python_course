@@ -6,10 +6,12 @@ point = namedtuple('Point', 'x, y')
 
 
 def dist(a, b):
+    """Calculate distance between two points: a and b."""
     return math.sqrt((a.x - b.x)**2 + (a.y - b.y)**2)
 
 
 def mycartesian_product(some_list):
+    """Get cartesian product of a list with itself."""
     pr = []
     for ind, item1 in enumerate(some_list[:-1], start=1):
         for item2 in some_list[ind:]:
@@ -19,6 +21,7 @@ def mycartesian_product(some_list):
 
 
 def xy_from_file(filename):
+    """Read in coordinates from a given file."""
     with open(filename) as fobj:
         content = fobj.readlines()
 
@@ -32,6 +35,7 @@ def xy_from_file(filename):
 
 
 def main(filename):
+    """Main function."""
     points = xy_from_file(filename)
     cartesian_prod = mycartesian_product(points)
     distances = [dist(p1, p2) for p1, p2 in cartesian_prod]

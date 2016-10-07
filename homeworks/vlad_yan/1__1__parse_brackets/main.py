@@ -3,6 +3,7 @@ from optparse import OptionParser
 
 
 def number_of_brackets(string, brackets):
+    """Get total number of brackets in a string."""
     myregex = '[%s]' % ''.join(['\%s\%s' % (item[0], item[1]) for item in brackets])
     result = re.findall(myregex, string)
 
@@ -10,6 +11,10 @@ def number_of_brackets(string, brackets):
 
 
 def check_brackets(string, open_bracket, close_bracket):
+    """
+    Check if the string contains a consistent set of brackets.
+    If it does - return None, if it does't - return the position
+    of the wrong bracket."""
     open_count = 0  # opening brackets counter
     close_count = 0  # closing brackets counter
 
@@ -31,6 +36,7 @@ def check_brackets(string, open_bracket, close_bracket):
 
 
 def main(string):
+    """Main function."""
     brackets = [
         ('(', ')'),
         ('[', ']'),
