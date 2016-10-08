@@ -1,18 +1,27 @@
 import re
 from optparse import OptionParser
 
-floatnumber = '\d+(?:\.\d+)?'
-myregex = '(?P<operand1>{number})\s*(?P<operation>[\+\-\*/])\s*(?P<operand2>{number})'.format(number=floatnumber)
-myre = re.compile(myregex)
+
+# define some constants
+operations = '[\+\-\*/]'
+number = '\s*\d+(?:\.\d+)?\s*'
+
+# define my regular expression
+bracket_expr = '\({number}\s*{operations}\s*{number}\)'.\
+    format(number=number, operations=operations)
+complex_expr = '({number}|{bracket_expr}|{operations})+'.\
+    format(number=number, operations=operations, bracket_expr=bracket_expr)
 
 
-def find_expressions(myre_, string):
-    expressions = myre_.findall(string)
+def find_expressions(myre, string):
+    """Get all the arithmetic expressions in the string."""
+    expressions = re.findall(myre, string)
 
     return expressions
 
 
 def evaluate_expression(expression):
+    """Evaluate arithmetic expression and return the result."""
     operand1, operation, operand2 = expression
     operand1 = float(operand1)
     operand2 = float(operand2)
@@ -33,8 +42,9 @@ def evaluate_expression(expression):
     print '%s = %s' % (expr_str, result)
 
 
-def main(myre_, string):
-    expressions = find_expressions(myre_, string)
+def main(myre, string):
+    """Main function."""
+    expressions = find_expressions(myre, string)
 
     for expr in expressions:
         evaluate_expression(expr)
@@ -45,4 +55,4 @@ if __name__ == '__main__':
     opts, args = parser.parse_args()
 
     arg = args[0]
-    main(myre, arg)
+    main(complex_expr, arg)
