@@ -1,10 +1,6 @@
 import re
 
 
-def calculate(my_string):
-    eval(my_string)
-
-
 def find_expression(my_string):
     result = re.findall(r'-?[ ]?([0-9]+\.?[0-9]*)[ ]?([\+\-\*/])[ ]?([0-9]+\.?[0-9]*)', my_string)
     return result
