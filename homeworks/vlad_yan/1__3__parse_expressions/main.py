@@ -26,11 +26,11 @@ def evaluate_expression(expression):
     elif operation == '/':
         result = operand1 / operand2
     else:
-        print 'ERROR: unknown operation!'
+        print('ERROR: unknown operation!')
         return
 
     expr_str = ''.join(expression)
-    print '%s = %s' % (expr_str, result)
+    print('%s = %s' % (expr_str, result))
 
 
 def main(myre_, string):

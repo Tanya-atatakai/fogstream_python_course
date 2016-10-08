@@ -57,9 +57,9 @@ def main(string):
             break
 
     if status:
-        print 'yes'
+        print('yes')
     else:
-        print bad_bracket
+        print(bad_bracket)
 
 
 if __name__ == '__main__':

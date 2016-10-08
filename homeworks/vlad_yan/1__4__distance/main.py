@@ -21,7 +21,7 @@ def mycartesian_product(some_list):
 
 
 def xy_from_file(filename):
-    """Read in coordinates from a given file."""
+    """Read in point coordinates from a given file."""
     with open(filename) as fobj:
         content = fobj.readlines()
 
@@ -43,7 +43,7 @@ def main(filename):
     min_ = min(distances)
     max_ = max(distances)
 
-    print 'min: %s\nmax: %s' % (min_, max_)
+    print('min: %s\nmax: %s' % (min_, max_))
 
 
 if __name__ == '__main__':

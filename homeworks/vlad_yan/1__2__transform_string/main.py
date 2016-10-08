@@ -87,54 +87,64 @@ def islongnumber(string):
     return True
 
 
+def regex_transform(string):
+    urlregex = 'https?://[^\s]+'
+    emailregex = '[^@^\s]+@[^@^\s]+\.[^@^\s]+'
+    numbersregex = '[0-9]{3,}'
+
+    string = re.sub(urlregex, '[ссылка запрещена]', string)
+    string = re.sub(emailregex, '[контакты запрещены]', string)
+    string = re.sub(numbersregex, '', string)
+
+    # first character must be UPPER case
+    string = string[0].upper() + string[1:]
+
+    # the rest of the string must be lower case
+    string = string[0] + re.sub('[A-Z]', lambda m: m.group(0).lower(), string[1:])
+
+    return string
+
+
+def simple_transform(string):
+    words = string.split()
+    spaces = retrieve_spaces(string)
+
+    for ind, word in enumerate(words):
+        if isurl(word):
+            words[ind] = '[ссылка запрещена]'
+            continue
+        elif isemail(word):
+            words[ind] = '[контакты запрещены]'
+            continue
+        elif islongnumber(word):
+            words[ind] = ''
+            continue
+
+        words[ind] = word.lower()
+
+    first_word = words[0]
+    words[0] = first_word[0].upper() + first_word[1:]
+
+    result = ''
+
+    spaces.append('')
+    for word, sp in zip(words, spaces):
+        result += (word + sp)
+
+    return result
+
+
 def main(string, useregex=True):
     """
     Transform the given string.
     useregex - regular expressions usage flag."""
     if useregex:
-        urlregex = 'https?://[^\s]+'
-        emailregex = '[^@^\s]+@[^@^\s]+\.[^@^\s]+'
-        numbersregex = '[0-9]{3,}'
-
-        string = re.sub(urlregex, '[ссылка запрещена]', string)
-        string = re.sub(emailregex, '[контакты запрещены]', string)
-        string = re.sub(numbersregex, '', string)
-
-        # first character must be UPPER case
-        string = string[0].upper() + string[1:]
-
-        # the rest of the string must be lower case
-        string = string[0] + re.sub('[A-Z]', lambda m: m.group(0).lower(), string[1:])
+        result = regex_transform(string)
 
     else:
-        words = string.split()
-        spaces = retrieve_spaces(string)
+        result = simple_transform(string)
 
-        for ind, word in enumerate(words):
-            if isurl(word):
-                words[ind] = '[ссылка запрещена]'
-                continue
-            elif isemail(word):
-                words[ind] = '[контакты запрещены]'
-                continue
-            elif islongnumber(word):
-                words[ind] = ''
-                continue
-
-            words[ind] = word.lower()
-
-        first_word = words[0]
-        words[0] = first_word[0].upper() + first_word[1:]
-
-        result = ''
-
-        spaces.append('')
-        for word, sp in zip(words, spaces):
-            result += (word + sp)
-
-        string = result
-
-    return string
+    return result
 
 
 if __name__ == '__main__':
@@ -144,5 +154,4 @@ if __name__ == '__main__':
     arg = args[0]
     newstr = main(arg, useregex=False)
 
-    print arg
-    print newstr
+    print(newstr)
