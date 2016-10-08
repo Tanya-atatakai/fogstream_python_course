@@ -1,9 +1,12 @@
+"""
+Currency exchange rates are indicated according to
+available data from the Central Bank of Russia"""
 import configparser
 import urllib.request
 import xml.etree.ElementTree as ET
 
 
-# read in URL addresses from configuration parameters
+# read in URL addresses from configuration parameters;
 cparser = configparser.ConfigParser()
 cparser.read('config.ini')
 NAMES_LINK = cparser['URL']['names_link']
